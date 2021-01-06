@@ -1,57 +1,69 @@
 <template>
-  <div class="card-form">
-    <form autocomplete="off" v-on:submit.prevent>
-      <label for="number" class="col-2">Card Nummer</label>
-      <input
-        type="text"
-        maxlength="16"
-        placeholder="XXXX XXXX XXXX XXXX"
-        class="col-2"
-        name="number"
-        v-model="newCard.enteredCardNumber"
-      />
-      <label for="cardholder" class="col-2">Cardholder Name</label>
-      <input
-        type="text"
-        placeholder="Firstname Lastname "
-        class="col-2"
-        name="name"
-        v-model="newCard.enteredCardholderName"
-      />
-      <label for="month" class="col-1">Month | </label>
-      <label for="year" class="col-1">Year</label>
-      <select name="month" class="col-1" v-model="newCard.enteredMonth">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-      </select>
-      <select name="year" class="col-1" v-model="newCard.enteredYear">
-        <option value="22">22</option>
-        <option value="23">23</option>
-        <option value="24">24</option>
-        <option value="25">25</option>
-      </select>
-      <label for="vendor" class="col-2">Vendor</label>
-      <select name="vendor" class="col-2" v-model="newCard.enteredVendor">
-        <option value="Bitcoin">Bitcoin</option>
-        <option value="Blockchain">Blockchain</option>
-        <option value="Ninja">Ninja</option>
-        <option value="Evil">Evil</option>
-      </select>
-      <button class="anc-btn" @click="$emit('newCardEx', newCard)">
-        Check your card
-      </button>
-    </form>
-  </div>
+  <form autocomplete="off" v-on:submit.prevent class="card-form">
+    <label for="number" class="col-2">Card Nummer</label>
+    <input
+      type="text"
+      maxlength="16"
+      placeholder="XXXX XXXX XXXX XXXX"
+      class="col-2"
+      name="number"
+      v-model="newCard.enteredCardNumber"
+      @input="$emit('newCardEx', newCard)"
+    />
+    <label for="cardholder" class="col-2">Cardholder Name</label>
+    <input
+      type="text"
+      placeholder="Firstname Lastname "
+      class="col-2"
+      name="name"
+      v-model="newCard.enteredCardholderName"
+      @input="$emit('newCardEx', newCard)"
+    />
+    <label for="month" class="col-1">Month </label>
+    <label for="year" class="col-1">Year</label>
+    <select
+      name="month"
+      class="col-1"
+      v-model="newCard.enteredMonth"
+      @change="$emit('newCardEx', newCard)"
+    >
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+    </select>
+    <select
+      name="year"
+      class="col-1"
+      @change="$emit('newCardEx', newCard)"
+      v-model="newCard.enteredYear"
+    >
+      <option value="22">22</option>
+      <option value="23">23</option>
+      <option value="24">24</option>
+      <option value="25">25</option>
+    </select>
+    <label for="vendor" class="col-2">Vendor</label>
+    <select
+      name="vendor"
+      class="col-2"
+      v-model="newCard.enteredVendor"
+      @change="$emit('newCardEx', newCard)"
+    >
+      <option value="bitcoin">Bitcoin</option>
+      <option value="blockchain">Blockchain</option>
+      <option value="ninja">Ninja</option>
+      <option value="evil">Evil</option>
+    </select>
+  </form>
 </template>
 
 <script>
@@ -72,7 +84,7 @@ export default {
 
 <style>
 .card-form {
-  margin: 2rem 0 0;
+  margin: 1rem 0 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0 1rem;

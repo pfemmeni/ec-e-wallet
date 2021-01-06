@@ -1,9 +1,14 @@
 <template>
   <div>
     <Top :element="home"> </Top>
-    <Card :exCard="exampleCard"> </Card>
-    <CardStack></CardStack>
-    <button class="anc-btn">
+    <Card class="view-choosen" :exCard="choosenCard" v-if="choosenCard"> </Card>
+    <button class="remove-btn " v-if="choosenCard" @click="removeCard">
+      REMOVE CARD
+    </button>
+
+    <CardStack class="card-stack" @showCard="showCard"> </CardStack>
+
+    <button class="anc-btn ">
       <router-link class="anc-btn-text" to="add-card">ADD NEW CARD</router-link>
     </button>
   </div>
@@ -13,20 +18,75 @@
 import Top from "../components/Top";
 import Card from "../components/Card";
 import CardStack from "../components/CardStack";
+
 export default {
   components: { Top, Card, CardStack },
+  computed: {
+    cardCollection() {
+      return this.$root.cardCollection;
+    },
+  },
   data() {
     return {
       home: { name: "E-WALLET", paragraph: "ACTIVE CARD" },
-      exampleCard: {
-        cardNumber: "XXXX XXXX XXXX XXXX",
-        name: "Anna Karlsson",
-        month: "03",
-        year: "23",
-      },
+      choosenCard: null,
     };
+  },
+  methods: {
+    showCard(newCard) {
+      this.choosenCard = {
+        cardNumber: newCard.cardNumber,
+        name: newCard.cardholderName,
+        month: newCard.month,
+        year: newCard.year,
+        vendor: newCard.vendor,
+      };
+    },
+    removeCard() {
+      if (confirm("Do you really want to delete?")) {
+        this.choosenCard = null;
+        this.$root.cardCollection = this.$root.cardCollection.filter(
+          this.choosenCard
+        );
+      }
+      // return this.$root.cardCollection;
+    },
   },
 };
 </script>
 
-<style></style>
+<style>
+.view-choosen {
+  margin-bottom: 0.5rem;
+}
+.card-stack {
+  margin: 2rem 0 12rem;
+  display: grid;
+  grid-auto-rows: 4rem;
+}
+.remove-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 2rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  text-decoration: none;
+  color: #000;
+  border: 0.125rem solid rgb(194, 1, 1);
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem 0;
+  margin-top: 0;
+  background: rgb(240, 126, 126);
+  width: 100%;
+}
+</style>

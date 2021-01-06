@@ -2,9 +2,10 @@
   <main>
     <Top :element="header"> </Top>
     <Card :exCard="exampleCard"></Card>
+    <p class="error" v-if="error">Fill all information</p>
     <CardForm @newCardEx="addExampleCard"></CardForm>
-    <button class="anc-btn" @click="newCardAdd">
-      <!-- <router-link class="anc-btn-text" to="/">ADD CARD</router-link> -->
+    <button class="anc-btn anc-btn-text button" @click="newCardAdd">
+      ADD CARD
     </button>
   </main>
 </template>
@@ -13,15 +14,17 @@
 import Top from "../components/Top";
 import Card from "../components/Card";
 import CardForm from "../components/CardForm";
+
 export default {
   components: { Top, Card, CardForm },
   data() {
     return {
       header: { name: "ADD NEW CARD", paragraph: "NEW CARD" },
-      cardCollection: [],
       exampleCard: {},
+      error: false,
     };
   },
+
   methods: {
     addExampleCard(newCard) {
       this.exampleCard = {
@@ -33,13 +36,32 @@ export default {
       };
     },
     newCardAdd() {
-      this.cardCollection.push(this.exampleCard);
+      if (
+        !this.exampleCard.cardNumber ||
+        !this.exampleCard.name ||
+        !this.exampleCard.month ||
+        !this.exampleCard.year ||
+        !this.exampleCard.vendor
+      ) {
+        this.error = true;
+      } else {
+        this.$root.cardCollection.push(this.exampleCard);
+        this.$router.push("/");
+      }
     },
   },
 };
 </script>
 
 <style>
+.error {
+  margin-top: 2rem;
+
+  font-weight: 600;
+  color: red;
+  display: flex;
+  justify-content: center;
+}
 .anc-btn {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -62,7 +84,9 @@ export default {
   border-radius: 0.5rem;
   margin: 2rem 0;
   background: #fff;
+  width: 100%;
 }
+
 .anc-btn-text {
   font-size: 1.2rem;
   text-transform: uppercase;
