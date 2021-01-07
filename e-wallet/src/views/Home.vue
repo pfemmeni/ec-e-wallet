@@ -45,13 +45,13 @@ export default {
     removeCard() {
       if (confirm("Do you really want to delete?")) {
         this.choosenCard = null;
-        this.$root.cardCollection = this.$root.cardCollection.filter(
-          this.choosenCard
-        );
       }
-      // return this.$root.cardCollection;
     },
-  },
+  }, //   this.$root.cardCollection = this.$root.cardCollection.filter(
+  //     this.choosenCard
+  //   );
+  // }
+  // // return this.$root.cardCollection;
 };
 </script>
 
