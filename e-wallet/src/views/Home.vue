@@ -2,15 +2,21 @@
   <div>
     <Top :element="home"> </Top>
     <Card class="view-choosen" :exCard="choosenCard" v-if="choosenCard"> </Card>
-    <button class="remove-btn " v-if="choosenCard" @click="removeCard">
+    <button v-if="choosenCard" class="remove-btn " @click="removeCard">
       REMOVE CARD
     </button>
 
-    <CardStack class="card-stack" @showCard="showCard"> </CardStack>
+    <CardStack
+      :clicked="clicked"
+      :choosenCard="choosenCard"
+      class="card-stack"
+      @showCard="showCard"
+    >
+    </CardStack>
 
-    <button class="anc-btn ">
-      <router-link class="anc-btn-text" to="add-card">ADD NEW CARD</router-link>
-    </button>
+    <router-link class="anc-btn anc-btn-text" to="add-card"
+      >ADD NEW CARD</router-link
+    >
   </div>
 </template>
 
@@ -30,6 +36,7 @@ export default {
     return {
       home: { name: "E-WALLET", paragraph: "ACTIVE CARD" },
       choosenCard: null,
+      clicked: false,
     };
   },
   methods: {
@@ -40,14 +47,24 @@ export default {
         month: newCard.month,
         year: newCard.year,
         vendor: newCard.vendor,
+        id: newCard.id,
       };
     },
     removeCard() {
       if (confirm("Do you really want to delete?")) {
+        this.filterArray(this.choosenCard);
         this.choosenCard = null;
+        this.clicked = true;
       }
     },
-  }, //   this.$root.cardCollection = this.$root.cardCollection.filter(
+    filterArray(cardToDelete) {
+      this.cardCollection = this.cardCollection.filter(
+        (card) => card.id === cardToDelete.id
+      );
+    },
+    // return this.cardCollection.filter(this.choosenCard);
+  },
+  //   this.$root.cardCollection = this.$root.cardCollection.filter(
   //     this.choosenCard
   //   );
   // }

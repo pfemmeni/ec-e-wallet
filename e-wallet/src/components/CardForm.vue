@@ -76,6 +76,7 @@ export default {
         enteredMonth: "",
         enteredYear: "",
         enteredVendor: "",
+        id: Date.now(),
       },
     };
   },

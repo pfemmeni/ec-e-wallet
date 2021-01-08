@@ -2,7 +2,7 @@
   <div>
     <Card
       v-for="oneCard in cardCollection"
-      :key="oneCard.cardNumber"
+      :key="oneCard.id"
       :exCard="oneCard"
       @click="$emit('showCard', oneCard)"
     ></Card>
@@ -13,6 +13,7 @@
 import Card from "../components/Card";
 export default {
   components: { Card },
+
   computed: {
     cardCollection() {
       return this.$root.cardCollection;

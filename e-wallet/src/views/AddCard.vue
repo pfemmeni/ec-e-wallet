@@ -33,6 +33,7 @@ export default {
         month: newCard.enteredMonth,
         year: newCard.enteredYear,
         vendor: newCard.enteredVendor,
+        id: newCard.id,
       };
     },
     newCardAdd() {
